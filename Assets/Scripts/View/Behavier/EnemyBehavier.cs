@@ -15,9 +15,8 @@ public class EnemyBehavier : MonoBehaviour {
     private AudioClip hurtClip;
     [SerializeField]
     private AudioClip deadClip;
-
-    public EnemyData enemyData;
-
+    public PlayerController playerController;
+    public Transform hitPoint;
     public bool IsDead
     {
         get
@@ -32,6 +31,7 @@ public class EnemyBehavier : MonoBehaviour {
         meshFader = GetComponent<MeshFader>();
         audioSource = GetComponent<AudioSource>();
         healthComponent = GetComponent<HealthComponent>();
+        playerController = GameFacade.GetInstance().PlayerController;
         //GameFacade.GetInstance();  //測試用
     }
 
@@ -41,10 +41,7 @@ public class EnemyBehavier : MonoBehaviour {
     }
 
     [ContextMenu("Test Execute")]
-    private void TestExecute()
-    {
-        StartCoroutine(Execute(enemyData));
-    }
+  
 
     public IEnumerator Execute(EnemyData enemyData)
     {
@@ -59,7 +56,7 @@ public class EnemyBehavier : MonoBehaviour {
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         yield return StartCoroutine(meshFader.FadeOut());
     }
-    private void DoDamage(int attack)
+    public void DoDamage(int attack)
     {
         animator.SetTrigger("hurt");
         audioSource.clip = hurtClip;
@@ -68,11 +65,26 @@ public class EnemyBehavier : MonoBehaviour {
     }
     private void Update()
     {
-        if (healthComponent.IsOver)
+        if (IsDead)
             return;
+
+#if UNITY_EDITOR
         if(Input.GetButtonDown("Fire1"))//滑鼠左鍵
         {
-            DoDamage(10);//扣10滴血
+            //DoDamage(10);//扣10滴血
+            playerController.OnClickEnemy(this);
         }
+#else
+        if (Input.touchCount > 0)
+        {
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                if (Input.GetTouch(i).phase == TouchPhase.Began)
+                {
+                    playerController.OnClickEnemy(this);
+                }
+            }
+        }
+#endif
     }
 }

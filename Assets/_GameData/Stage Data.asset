@@ -12,13 +12,27 @@ MonoBehaviour:
   m_Name: Stage Data
   m_EditorClassIdentifier: 
   enemys:
+  - health: 50
+    willDropItemid: 0
+    dropProbabillity: 0
+    defeatTimeLimit: 0
+    enemyPrefab: {fileID: 114005244460507114, guid: c7e6d0dea441efb409d0faf991a8281b,
+      type: 2}
   - health: 100
     willDropItemid: 0
     dropProbabillity: 0
     defeatTimeLimit: 0
-    enemyPrefab: {fileID: 0}
-  - health: 300
+    enemyPrefab: {fileID: 114023678783591036, guid: 775d4daf3029fc7459e40546dcca0366,
+      type: 2}
+  - health: 150
     willDropItemid: 0
     dropProbabillity: 0
     defeatTimeLimit: 0
-    enemyPrefab: {fileID: 0}
+    enemyPrefab: {fileID: 114063336266953296, guid: c19119bbe5b2d1c4183eb056c0176f89,
+      type: 2}
+  - health: 200
+    willDropItemid: 0
+    dropProbabillity: 0
+    defeatTimeLimit: 0
+    enemyPrefab: {fileID: 114628826313430782, guid: ac68a5631db13d746a8ff4487b38a812,
+      type: 2}
